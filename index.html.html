@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Косметолог Елена — инъекционная косметология | Запись онлайн</title>
+<meta name="description" content="Косметолог с 12-летним опытом и высшим медицинским образованием: патулинотерапия, мезотерапия, биоревитализация, филлеры, коррекция губ, нитевой лифтинг. Запись в один клик через MAX.">
+
+<!-- ============================================================
+     ЛЕНДИНГ КОСМЕТОЛОГА — один файл: HTML + CSS + JS
+     Что и где менять:
+     1) Ссылка на профиль в MAX и диплинк — ищите комментарий «<<< MAX >>>» (2 места: константы в JS и дублирующая кнопка).
+     2) Телефон — ищите «<<< ТЕЛЕФОН >>>».
+     3) Имя специалиста и тексты — в разметке, всё подписано.
+     4) Фотографии — папка images/ рядом с этим файлом (подробности в README-photos.md).
+     ============================================================ -->
+
+<style>
+/* ==========================================================
+   1. БАЗА / ПЕРЕМЕННЫЕ
+   ========================================================== */
+:root{
+  --wine:#9B2C4E;            /* акцентный (кнопки, выделения) */
+  --wine-dark:#7A1F3C;       /* hover */
+  --wine-soft:#F7E6EC;       /* светлая подложка */
+  --gold:#C8A15A;            /* тонкий золотой акцент */
+  --cream:#FAF6F1;           /* фон секций */
+  --white:#FFFFFF;
+  --ink:#221A1D;             /* основной текст */
+  --muted:#6E6167;           /* вторичный текст */
+  --line:#EADFDB;            /* разделители */
+  --shadow:0 10px 30px rgba(60,25,35,.08);
+  --shadow-lg:0 24px 60px rgba(60,25,35,.16);
+  --r:20px;                  /* радиус карточек */
+  --maxw:1180px;
+  --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{
+  font-family:var(--font);
+  color:var(--ink);
+  background:var(--white);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;image-orientation:from-image}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+button{font:inherit;cursor:pointer}
+section{padding:64px 0}
+.container{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+  font-weight:700;color:var(--wine);margin-bottom:14px;
+}
+.eyebrow::before{content:"";width:26px;height:2px;background:var(--gold)}
+h1,h2,h3{line-height:1.15;font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
+.section-lead{color:var(--muted);max-width:640px;font-size:17px}
+
+/* ---------- кнопки ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 30px;border-radius:999px;border:0;
+  font-weight:700;font-size:16px;line-height:1;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+  will-change:transform;
+}
+.btn--primary{
+  background:linear-gradient(135deg,#B23A5C 0%,var(--wine) 55%,#8A2547 100%);
+  color:#fff;box-shadow:0 12px 26px rgba(155,44,78,.35);
+}
+.btn--primary:hover{transform:translateY(-2px) scale(1.02);box-shadow:0 18px 34px rgba(155,44,78,.45);background:linear-gradient(135deg,#C0456A,var(--wine-dark))}
+.btn--primary:active{transform:translateY(0) scale(.99)}
+.btn--ghost{background:transparent;color:var(--wine);border:2px solid var(--wine);padding:14px 28px}
+.btn--ghost:hover{background:var(--wine-soft);transform:translateY(-2px)}
+.btn--white{background:#fff;color:var(--wine)}
+.btn--white:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.18)}
+.btn--sm{padding:11px 20px;font-size:14px}
+.btn--full{width:100%}
+/* мягкая пульсация главной CTA, чтобы кнопка была заметной */
+@keyframes pulse{0%{box-shadow:0 12px 26px rgba(155,44,78,.35),0 0 0 0 rgba(155,44,78,.45)}70%{box-shadow:0 12px 26px rgba(155,44,78,.35),0 0 0 16px rgba(155,44,78,0)}100%{box-shadow:0 12px 26px rgba(155,44,78,.35),0 0 0 0 rgba(155,44,78,0)}}
+.btn--pulse{animation:pulse 2.6s ease-out infinite}
+@media (prefers-reduced-motion:reduce){.btn--pulse{animation:none}}
+
+/* ==========================================================
+   2. ШАПКА
+   ========================================================== */
+.header{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid transparent;transition:border-color .2s,box-shadow .2s;
+}
+.header.is-scrolled{border-color:var(--line);box-shadow:0 6px 20px rgba(60,25,35,.06)}
+.header__inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:70px}
+.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:18px;letter-spacing:.02em}
+.logo__mark{
+  width:40px;height:40px;border-radius:50%;flex:none;
+  background:radial-gradient(circle at 32% 30%,#D97C96,var(--wine) 70%);
+  color:#fff;display:grid;place-items:center;font-size:17px;font-weight:800;
+  box-shadow:0 6px 14px rgba(155,44,78,.35);
+}
+.logo small{display:block;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.12em;text-transform:uppercase}
+.nav{display:none;align-items:center;gap:26px}
+.nav a{font-size:15px;font-weight:600;color:var(--muted);transition:color .15s}
+.nav a:hover{color:var(--wine)}
+.header__cta{display:none}
+.burger{
+  width:46px;height:46px;border-radius:14px;border:1px solid var(--line);background:#fff;
+  display:grid;place-items:center;gap:5px;padding:0;
+}
+.burger span{display:block;width:20px;height:2px;background:var(--ink);border-radius:2px;transition:.25s}
+.burger.is-open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.is-open span:nth-child(2){opacity:0}
+.burger.is-open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{
+  position:fixed;top:70px;left:0;right:0;z-index:99;background:#fff;
+  border-bottom:1px solid var(--line);box-shadow:var(--shadow);
+  transform:translateY(-120%);transition:transform .3s ease;padding:14px 20px 22px;
+}
+.mobile-menu.is-open{transform:none}
+.mobile-menu a{display:block;padding:13px 6px;font-weight:600;border-bottom:1px solid var(--cream)}
+.mobile-menu a:last-child{border-bottom:0}
+@media (min-width:960px){
+  .nav{display:flex}
+  .header__cta{display:inline-flex}
+  .burger{display:none}
+  .mobile-menu{display:none}
+}
+
+/* ==========================================================
+   3. HERO
+   ========================================================== */
+.hero{
+  position:relative;overflow:hidden;
+  padding:110px 0 64px;
+  background:
+    radial-gradient(900px 500px at 85% -10%,rgba(155,44,78,.14),transparent 60%),
+    radial-gradient(700px 480px at -10% 90%,rgba(200,161,90,.14),transparent 55%),
+    linear-gradient(180deg,#FCF7F3 0%,#FAF3EF 100%);
+}
+.hero__grid{display:grid;grid-template-columns:1fr;gap:34px;align-items:center}
+.hero__title{font-size:clamp(32px,7.6vw,56px);margin:6px 0 16px}
+.hero__title em{font-style:normal;color:var(--wine);position:relative;white-space:nowrap}
+.hero__sub{font-size:clamp(16px,2.4vw,19px);color:var(--muted);max-width:520px}
+.hero__greet{
+  margin:20px 0 26px;padding:16px 18px;border-radius:16px;
+  background:#fff;border:1px solid var(--line);box-shadow:var(--shadow);
+  font-size:15.5px;max-width:540px;
+}
+.hero__greet b{color:var(--wine)}
+.hero__actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.hero__phone{font-weight:700;font-size:15px;border-bottom:1.5px dashed var(--wine);padding-bottom:2px;transition:color .15s}
+.hero__promo{
+  display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;
+  background:linear-gradient(120deg,#F7E7C9,#EFD3A3);color:#7A5414;
+  border-radius:999px;padding:9px 15px;box-shadow:0 6px 16px rgba(200,161,90,.25);
+}
+.hero__phone:hover{color:var(--wine)}
+.hero__stats{display:flex;gap:26px;margin-top:30px;flex-wrap:wrap}
+.hero__stats b{display:block;font-size:26px;color:var(--wine);letter-spacing:-.02em}
+.hero__stats span{font-size:13px;color:var(--muted)}
+.hero__media{position:relative}
+.hero__media .frame{
+  border-radius:26px;overflow:hidden;box-shadow:var(--shadow-lg);
+  aspect-ratio:4/4.6;background:var(--wine-soft);
+}
+.hero__media .frame img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.hero__badge{
+  position:absolute;left:-6px;bottom:22px;
+  background:#fff;border-radius:16px;padding:12px 16px;box-shadow:var(--shadow-lg);
+  display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:700;
+}
+.hero__badge i{width:34px;height:34px;border-radius:10px;background:var(--wine-soft);display:grid;place-items:center;font-style:normal}
+.hero__ring{position:absolute;right:-40px;top:-40px;width:180px;height:180px;border-radius:50%;border:26px solid rgba(155,44,78,.08)}
+@media (min-width:960px){
+  .hero{padding:150px 0 90px}
+  .hero__grid{grid-template-columns:1.02fr .98fr;gap:56px}
+}
+
+/* ==========================================================
+   4. О СПЕЦИАЛИСТЕ
+   ========================================================== */
+.about__grid{display:grid;grid-template-columns:1fr;gap:34px;align-items:center}
+.about__media{position:relative}
+.about__media .frame{border-radius:26px;overflow:hidden;box-shadow:var(--shadow-lg);aspect-ratio:4/4.2;background:var(--wine-soft)}
+.about__media .frame img{width:100%;height:100%;object-fit:cover;object-position:center 22%}
+.about__exp{
+  position:absolute;right:14px;top:14px;background:var(--wine);color:#fff;
+  border-radius:18px;padding:14px 18px;text-align:center;box-shadow:var(--shadow-lg);
+}
+.about__exp b{display:block;font-size:30px;line-height:1}
+.about__exp span{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.9}
+.about__text p{color:var(--muted);margin-bottom:14px;font-size:16.5px}
+.about__text p strong{color:var(--ink)}
+.achieve{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px}
+.achieve__card{
+  background:var(--cream);border:1px solid var(--line);border-radius:var(--r);
+  padding:18px;transition:transform .2s,box-shadow .2s;
+}
+.achieve__card:hover{transform:translateY(-4px);box-shadow:var(--shadow);background:#fff}
+.achieve__icon{width:44px;height:44px;border-radius:13px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;font-size:21px;margin-bottom:10px}
+.achieve__card h3{font-size:15.5px;margin-bottom:4px}
+.achieve__card p{font-size:13.5px;color:var(--muted)}
+@media (min-width:960px){
+  .about{background:var(--white)}
+  .about__grid{grid-template-columns:.9fr 1.1fr;gap:56px}
+  .achieve{grid-template-columns:repeat(4,1fr)}
+}
+@media (min-width:700px) and (max-width:959px){.achieve{grid-template-columns:repeat(4,1fr)}}
+
+/* ==========================================================
+   5. УСЛУГИ
+   ========================================================== */
+.services{background:linear-gradient(180deg,#FAF6F1,#F6EDE8)}
+.services__grid{display:grid;grid-template-columns:1fr;gap:20px;margin-top:36px}
+.s-card{
+  background:#fff;border-radius:var(--r);overflow:hidden;border:1px solid var(--line);
+  box-shadow:var(--shadow);display:flex;flex-direction:column;
+  transition:transform .22s ease,box-shadow .22s ease;
+}
+.s-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.s-card__media{position:relative;min-height:190px;aspect-ratio:16/10;background:linear-gradient(135deg,#F6E7EC,#EFD9E0);overflow:hidden}
+.s-card__media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.s-card__tag{
+  position:absolute;left:12px;top:12px;background:rgba(255,255,255,.92);backdrop-filter:blur(4px);
+  color:var(--wine);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  padding:6px 11px;border-radius:999px;
+}
+.promo{
+  display:block;max-width:680px;
+  background:#fff;border:1.5px dashed var(--wine);border-radius:18px;
+  padding:13px 20px;font-size:14.5px;font-weight:600;color:var(--ink);
+  box-shadow:var(--shadow);margin-top:18px;
+}
+.promo i{margin-right:9px;font-style:normal}
+.promo b{color:var(--wine);font-weight:800}
+.promo i{font-style:normal;font-size:18px}
+.s-card__body{padding:20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.s-card__body h3{font-size:19px}
+.s-card__body p{font-size:14.5px;color:var(--muted);flex:1}
+.s-card__foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}
+.s-card__price{font-weight:800;color:var(--wine);font-size:15px}
+.s-card__price small{display:block;font-weight:600;color:var(--muted);font-size:11.5px}
+.disc-chip{
+  margin-left:auto;white-space:nowrap;
+  background:linear-gradient(120deg,#F3D9A6,#D9B264);color:#33220E;
+  font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  padding:6px 11px;border-radius:999px;box-shadow:0 4px 10px rgba(200,161,90,.35);
+}
+.s-card__btn{
+  border:1.5px solid var(--wine);background:#fff;color:var(--wine);
+  border-radius:999px;padding:9px 16px;font-size:13.5px;font-weight:700;
+  transition:.18s;white-space:nowrap;
+}
+.s-card__btn:hover{background:var(--wine);color:#fff;transform:translateY(-1px)}
+.s-note{margin-top:22px;font-size:13.5px;color:var(--muted)}
+@media (min-width:640px){.services__grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:980px){.services__grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ==========================================================
+   6. РЕЗУЛЬТАТЫ «ДО/ПОСЛЕ»
+   ========================================================== */
+.results{background:var(--white)}
+.results__grid{display:grid;grid-template-columns:1fr;gap:26px;margin-top:34px}
+.ba{
+  position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);
+  aspect-ratio:4/3.4;background:#EFE3E6;user-select:none;-webkit-user-select:none;
+}
+/* Составное фото «до/после» (один файл, где «до» сверху, «после» снизу):
+   каждый слой показывает свою половину кадра — картинка не «прыгает». */
+.ba__layer{position:absolute;inset:0;overflow:hidden}
+.ba__layer .ba__img{position:absolute;left:0;width:100%;height:200%;object-fit:cover;object-position:left center;display:block;pointer-events:none}
+.ba__before .ba__img{top:0}
+.ba__after .ba__img{bottom:0}
+.ba__after{clip-path:inset(0 0 0 var(--pos,50%))}
+.ba__divider{
+  position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:#fff;
+  transform:translateX(-1px);pointer-events:none;box-shadow:0 0 12px rgba(0,0,0,.35);
+}
+.ba__divider::after{
+  content:"⇄";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:42px;height:42px;border-radius:50%;background:#fff;color:var(--wine);
+  display:grid;place-items:center;font-size:17px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.25);
+}
+.ba__label{
+  position:absolute;top:12px;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;
+  background:rgba(34,26,29,.68);color:#fff;padding:6px 12px;border-radius:999px;backdrop-filter:blur(3px);
+}
+.ba__label--l{left:12px}
+.ba__label--r{right:12px}
+.ba__range{
+  position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0;
+  -webkit-appearance:none;appearance:none;background:transparent;
+}
+.results__caption{font-size:13.5px;color:var(--muted);margin-top:10px}
+.bellarti-card{position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);background:var(--wine-soft);height:100%}
+.bellarti-card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.bellarti-card figcaption{
+  position:absolute;left:0;right:0;bottom:0;padding:12px 14px;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(4px);
+  font-size:13px;font-weight:700;color:var(--ink);
+}
+@media (min-width:820px){.results__grid{grid-template-columns:1.35fr .65fr;align-items:stretch}}
+
+/* ==========================================================
+   7. ФОРМА ЗАПИСИ (главный CTA)
+   ========================================================== */
+.booking{
+  position:relative;overflow:hidden;color:#fff;
+  background:
+    radial-gradient(800px 460px at 88% 8%,rgba(255,255,255,.10),transparent 60%),
+    radial-gradient(700px 500px at 6% 100%,rgba(200,161,90,.22),transparent 55%),
+    linear-gradient(150deg,#8E2745 0%,var(--wine) 45%,#6E1A34 100%);
+}
+.booking .eyebrow{color:#F5C9D5}
+.booking .eyebrow::before{background:var(--gold)}
+.booking__grid{display:grid;grid-template-columns:1fr;gap:34px;align-items:start}
+.booking__info h2{color:#fff}
+.booking__info p{color:rgba(255,255,255,.85);font-size:16.5px;margin-bottom:20px}
+.steps{display:grid;gap:14px}
+.steps li{display:flex;gap:14px;align-items:flex-start;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:14px 16px}
+.steps i{flex:none;width:30px;height:30px;border-radius:50%;background:#fff;color:var(--wine);display:grid;place-items:center;font-style:normal;font-weight:800;font-size:14px}
+.steps b{display:block;font-size:15px}
+.steps span{font-size:13.5px;color:rgba(255,255,255,.78)}
+.booking__contact{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px}
+.booking__promo{
+  margin-top:18px;padding:14px 18px;
+  background:rgba(255,255,255,.12);border:1px dashed rgba(255,255,255,.45);border-radius:16px;
+  font-size:15px;line-height:1.55;
+}
+.booking__promo b{color:#FBE3AE}
+
+.card-form{
+  background:#fff;color:var(--ink);border-radius:24px;padding:26px 22px;
+  box-shadow:0 30px 70px rgba(30,8,15,.35);
+}
+.card-form h3{font-size:22px;margin-bottom:4px}
+.card-form>p{font-size:14px;color:var(--muted);margin-bottom:20px}
+.field{margin-bottom:15px}
+.field label{display:block;font-size:13px;font-weight:700;margin-bottom:6px}
+.field label .req{color:var(--wine)}
+.field input,.field select,.field textarea{
+  width:100%;padding:13px 14px;border-radius:13px;border:1.5px solid var(--line);
+  background:#FCFAF8;font:inherit;font-size:15px;color:var(--ink);
+  transition:border-color .15s,box-shadow .15s,background .15s;
+}
+.field textarea{min-height:84px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:none;border-color:var(--wine);background:#fff;box-shadow:0 0 0 4px rgba(155,44,78,.12);
+}
+.field.invalid input,.field.invalid select{border-color:#D4463C;background:#FDF4F3;box-shadow:0 0 0 4px rgba(212,70,60,.12)}
+.field .err{display:none;color:#C4382E;font-size:12.5px;margin-top:5px;font-weight:600}
+.field.invalid .err{display:block}
+.field-row{display:grid;grid-template-columns:1fr;gap:0}
+@media (min-width:520px){.field-row{grid-template-columns:1fr 1fr;gap:0 14px}}
+.form__hint{font-size:12.5px;color:var(--muted);margin:12px 0 18px;text-align:center}
+.form__alt{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.form__alt .btn{width:100%}
+.form__ok{
+  display:none;margin-top:14px;padding:12px 14px;border-radius:13px;font-size:14px;font-weight:600;
+  background:#EAF7EE;color:#1F7A3F;border:1px solid #BFE6CB;
+}
+.form__ok.is-visible{display:block}
+
+/* тост-уведомление */
+.toast{
+  position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);
+  z-index:300;background:var(--ink);color:#fff;border-radius:16px;padding:14px 20px;
+  display:flex;align-items:center;gap:12px;box-shadow:0 22px 50px rgba(0,0,0,.35);
+  transition:transform .45s cubic-bezier(.2,.9,.25,1.2);max-width:calc(100vw - 32px);font-size:14.5px;
+}
+.toast.is-visible{transform:translate(-50%,0)}
+.toast i{width:26px;height:26px;border-radius:50%;background:#2FBF62;display:grid;place-items:center;font-style:normal;font-size:14px;flex:none}
+@media (min-width:960px){
+  .booking__grid{grid-template-columns:.95fr 1.05fr;gap:50px}
+  .card-form{padding:34px}
+}
+
+/* ==========================================================
+   8. ФУТЕР / прочее
+   ========================================================== */
+.footer{background:#1E1518;color:#CFC3C7;padding:52px 0 26px}
+.footer__grid{display:grid;grid-template-columns:1fr;gap:26px}
+.footer h4{color:#fff;font-size:15px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+.footer a:hover{color:#fff;text-decoration:underline}
+.footer .brand{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.footer .brand .logo__mark{box-shadow:none}
+.footer__contacts li{margin-bottom:10px;font-size:15px}
+.footer__contacts b{color:#fff;display:block;font-size:19px}
+.footer__links li{margin-bottom:10px;font-size:15px}
+.footer__bottom{
+  margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;font-size:12.5px;color:#8F8186;
+}
+.disclaimer{background:#171013;color:#8F8186;font-size:12.5px;padding:14px 0;border-top:1px solid rgba(255,255,255,.06)}
+@media (min-width:820px){.footer__grid{grid-template-columns:1.4fr 1fr 1fr 1fr}}
+
+.totop{
+  position:fixed;right:18px;bottom:18px;z-index:80;width:48px;height:48px;border-radius:50%;
+  background:var(--wine);color:#fff;border:0;box-shadow:var(--shadow-lg);font-size:19px;
+  opacity:0;pointer-events:none;transform:translateY(12px);transition:.25s;
+}
+.totop.is-visible{opacity:1;pointer-events:auto;transform:none}
+.totop:hover{background:var(--wine-dark)}
+
+/* появление блоков при прокрутке */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+</style>
+</head>
+<body>
+
+<!-- ==========================================================
+     ШАПКА
+     ========================================================== -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <!-- <<< ИМЯ >>> замените «Елена» на своё имя/бренд -->
+    <a class="logo" href="#hero">
+      <span class="logo__mark">Е</span>
+      <span>Косметолог Елена<small>инъекционные методики</small></span>
+    </a>
+
+    <nav class="nav" aria-label="Основная навигация">
+      <a href="#about">О специалисте</a>
+      <a href="#services">Услуги</a>
+      <a href="#results">Результаты</a>
+      <a href="#booking">Запись</a>
+    </nav>
+
+    <!-- Кнопка в шапке: открывает MAX с приветственным текстом (см. JS: data-deeplink="quick") -->
+    <a class="btn btn--primary btn--sm header__cta" href="#" data-deeplink="quick">✦ Записаться</a>
+
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<nav class="mobile-menu" id="mobileMenu" aria-label="Мобильное меню">
+  <a href="#about">О специалисте</a>
+  <a href="#services">Услуги</a>
+  <a href="#results">Результаты «До/После»</a>
+  <a href="#booking">Запись</a>
+  <a href="tel:+79953413404">☎ +7 995 341-34-04</a>
+</nav>
+
+<!-- ==========================================================
+     1. HERO — приветственная секция
+     ========================================================== -->
+<section class="hero" id="hero">
+  <div class="container hero__grid">
+    <div class="hero__text reveal">
+      <span class="eyebrow">Косметология · Инъекционные методики</span>
+      <h1 class="hero__title">Красота. Уверенность. <em>ТЫ.</em></h1>
+      <p class="hero__sub">Патулинотерапия, биоревитализация, мезотерапия, филлеры, коррекция губ и нитевой лифтинг. Работаю аккуратно, по медицинским протоколам, с препаратами премиум-класса.</p>
+
+      <!-- краткое приветствие от специалиста -->
+      <div class="hero__greet">
+        <b>Здравствуйте, меня зовут Елена!</b><br>
+        Я врач-косметолог с высшим медицинским образованием и 12-летним опытом. Моя задача — не «переделать» вас, а
+        подсветить то лучшее, что уже есть: свежий цвет лица, чёткий овал, отдохнувший взгляд.
+        Запишитесь на консультацию — подберём протокол именно под вашу кожу.
+      </div>
+
+      <div class="hero__actions">
+        <!-- Главная акцентная кнопка «Записаться» — ссылка на MAX с подставленным текстом (см. JS) -->
+        <a href="#" class="btn btn--primary btn--pulse" data-deeplink="quick">Записаться на приём</a>
+        <!-- <<< ТЕЛЕФОН >>> -->
+        <a class="hero__phone" href="tel:+79953413404">+7 995 341-34-04</a>
+        <span class="hero__promo">✦ <span data-discount>Скидка 30%</span> при онлайн-записи</span>
+      </div>
+
+      <div class="hero__stats">
+        <div><b>12 лет</b><span>практики</span></div>
+        <div><b>4 000+</b><span>довольных клиентов</span></div>
+        <div><b>100%</b><span>медицинский подход</span></div>
+      </div>
+    </div>
+
+    <div class="hero__media reveal">
+      <div class="hero__ring" aria-hidden="true"></div>
+      <figure class="frame">
+        <img src="images/hero-cosmetologist.jpg"
+             alt="Косметолог Елена выполняет аппаратную процедуру клиенту"
+             width="1257" height="1680">
+      </figure>
+      <div class="hero__badge"><i>✓</i><span>Высшее медицинское<br>образование</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     2. О СПЕЦИАЛИСТЕ
+     ========================================================== -->
+<section class="about" id="about">
+  <div class="container about__grid">
+    <div class="about__media reveal">
+      <figure class="frame">
+        <img src="images/about-cosmetologist.jpg"
+             alt="Косметолог Елена за процедурой"
+             width="1257" height="1680">
+      </figure>
+      <div class="about__exp"><b>12</b><span>лет опыта</span></div>
+    </div>
+
+    <div class="about__text reveal">
+      <span class="eyebrow">О специалисте</span>
+      <h2>Врач, которому доверяют</h2>
+      <p><strong>12 лет профессионального опыта</strong> в эстетической медицине: от классической косметологии до авторских протоколов инъекционных методик. Веду приём по принципам доказательной медицины — сначала диагностика и план, потом процедура.</p>
+      <p><strong>Высшее медицинское образование</strong>, действующий сертификат по косметологии, регулярное повышение квалификации у производителей препаратов (Bellarti, линии плацентарной и гиалуроновой терапии). Работаю только с оригинальными препаратами, вскрытие упаковки — в присутствии клиента.</p>
+
+      <div class="achieve">
+        <div class="achieve__card">
+          <div class="achieve__icon">★</div>
+          <h3>12 лет опыта</h3>
+          <p>Тысячи процедур и естественные, «дорогие» результаты.</p>
+        </div>
+        <div class="achieve__card">
+          <div class="achieve__icon">✓</div>
+          <h3>Высшее мед. образование</h3>
+          <p>Понимаю анатомию, а не только «красоту» — это про безопасность.</p>
+        </div>
+        <div class="achieve__card">
+          <div class="achieve__icon">✦</div>
+          <h3>Сертификаты</h3>
+          <p>Действующие сертификаты и допуски к инъекционным методикам.</p>
+        </div>
+        <div class="achieve__card">
+          <div class="achieve__icon">❋</div>
+          <h3>Повышение квалификации</h3>
+          <p>Обучение и мастер-классы каждый год — новые протоколы.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     3. УСЛУГИ
+     Каждая карточка: фото + название + описание + «Записаться».
+     Фото услуг — images/service-*.jpg (см. README-photos.md):
+     замените файлы своими кадрами, имена менять не нужно.
+     ========================================================== -->
+<section class="services" id="services">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">Услуги</span>
+      <h2>Что я делаю</h2>
+      <p class="section-lead">Подберём методику на консультации — иногда достаточно одной процедуры, иногда выгоднее комбинированный протокол.</p>
+      <div class="promo"><i>✦</i><span data-discount>Скидка 30%</span> на любую услугу при записи через форму — зафиксирую прямо в заявке</div>
+    </div>
+
+    <div class="services__grid">
+
+      <!-- 1. ПАТУЛИНОТЕРАПИЯ -->
+      <article class="s-card reveal">
+        <div class="s-card__media">
+          <span class="s-card__tag">Омоложение</span>
+          <img src="images/service-placental.jpg"
+               alt="Патулинотерапия — плацентарная терапия" loading="lazy">
+        </div>
+        <div class="s-card__body">
+          <h3>Патулинотерапия (плацентарная терапия)</h3>
+          <p>Омоложение и восстановление кожи изнутри: биоактивные пептиды плаценты запускают регенерацию, выравнивают тон и плотность.</p>
+          <div class="s-card__foot">
+            <span class="s-card__price">от 6 000 ₽<small>за процедуру</small></span>
+            <span class="disc-chip" data-discount>Скидка 30%</span>
+            <button class="s-card__btn" data-pick="Патулинотерапия (плацентарная терапия)">Записаться →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. МЕЗОТЕРАПИЯ -->
+      <article class="s-card reveal">
+        <div class="s-card__media">
+          <span class="s-card__tag">Питание</span>
+          <img src="images/service-meso.jpg"
+               alt="Мезотерапия — витаминные коктейли" loading="lazy">
+        </div>
+        <div class="s-card__body">
+          <h3>Мезотерапия</h3>
+          <p>Введение витаминных коктейлей для питания и увлажнения кожи. Минус тусклый цвет, сухость и мелкие морщинки — плюс сияние.</p>
+          <div class="s-card__foot">
+            <span class="s-card__price">от 4 500 ₽<small>за процедуру</small></span>
+            <span class="disc-chip" data-discount>Скидка 30%</span>
+            <button class="s-card__btn" data-pick="Мезотерапия">Записаться →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. БИОРЕВИТАЛИЗАЦИЯ -->
+      <article class="s-card reveal">
+        <div class="s-card__media">
+          <span class="s-card__tag">Увлажнение</span>
+          <img src="images/service-biorev.jpg"
+               alt="Биоревитализация — гиалуроновая кислота" loading="lazy">
+        </div>
+        <div class="s-card__body">
+          <h3>Биоревитализация</h3>
+          <p>Насыщение кожи гиалуроновой кислотой и глубокое увлажнение. «Эффект хорошего отпуска»: упругость, гладкость, живой цвет лица.</p>
+          <div class="s-card__foot">
+            <span class="s-card__price">от 5 500 ₽<small>за процедуру</small></span>
+            <span class="disc-chip" data-discount>Скидка 30%</span>
+            <button class="s-card__btn" data-pick="Биоревитализация">Записаться →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. ФИЛЛЕРЫ -->
+      <article class="s-card reveal">
+        <div class="s-card__media">
+          <span class="s-card__tag">Объёмы</span>
+          <img src="images/service-fillers.jpg"
+               alt="Коррекция лица филлерами" loading="lazy">
+        </div>
+        <div class="s-card__body">
+          <h3>Коррекция лица с помощью филлеров</h3>
+          <p>Восполнение утраченных объёмов и разглаживание морщин: скулы, подбородок, носослёзная борозда, губы и контур. Аккуратно, без «перебора».</p>
+          <div class="s-card__foot">
+            <span class="s-card__price">от 8 000 ₽<small>1 шприц</small></span>
+            <span class="disc-chip" data-discount>Скидка 30%</span>
+            <button class="s-card__btn" data-pick="Коррекция лица с помощью филлеров">Записаться →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. КОРРЕКЦИЯ ГУБ -->
+      <article class="s-card reveal">
+        <div class="s-card__media">
+          <span class="s-card__tag">Губы</span>
+          <img src="images/service-lips.jpg"
+               alt="Коррекция губ — результат до и после" loading="lazy">
+        </div>
+        <div class="s-card__body">
+          <h3>Коррекция губ</h3>
+          <p>Увеличение объёма и моделирование формы губ: симметрия, чёткий контур, естественная чувственность. Подберём плотность препарата под ваш тип лица.</p>
+          <div class="s-card__foot">
+            <span class="s-card__price">от 9 000 ₽<small>1 шприц</small></span>
+            <span class="disc-chip" data-discount>Скидка 30%</span>
+            <button class="s-card__btn" data-pick="Коррекция губ">Записаться →</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. НИТЕВОЙ ЛИФТИНГ -->
+      <article class="s-card reveal">
+        <div class="s-card__media">
+          <span class="s-card__tag">Подтяжка</span>
+          <img src="images/service-threads.jpg"
+               alt="Нитевой лифтинг — подтяжка овала лица" loading="lazy">
+        </div>
+        <div class="s-card__body">
+          <h3>Нитевой лифтинг</h3>
+          <p>Подтяжка овала лица с помощью мезонитей: чёткая линия челюсти, лифтинг мягких тканей и стимуляция собственного коллагена.</p>
+          <div class="s-card__foot">
+            <span class="s-card__price">от 15 000 ₽<small>за зонально</small></span>
+            <span class="disc-chip" data-discount>Скидка 30%</span>
+            <button class="s-card__btn" data-pick="Нитевой лифтинг">Записаться →</button>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="s-note">✦ Цены указаны ориентировочно — итог зависит от препарата и зоны. На консультации составлю план и назову точную стоимость.</p>
+  </div>
+</section>
+
+<!-- ==========================================================
+     4. РЕЗУЛЬТАТЫ «ДО/ПОСЛЕ» — интерактивный слайдер
+     (использует фото «боковой профиль» из датасета)
+     ========================================================== -->
+<section class="results" id="results">
+  <div class="container">
+    <div class="reveal">
+      <span class="eyebrow">Результаты</span>
+      <h2>До / После</h2>
+      <p class="section-lead">Потяните ползунок — увидите разницу.</p>
+    </div>
+
+    <div class="results__grid reveal">
+      <figure>
+        <div class="ba" id="baSlider" style="--pos:50%">
+              <div class="ba__layer ba__before">
+            <img class="ba__img" src="images/before-after.jpg" alt="Результат до процедуры — профиль" loading="lazy">
+          </div>
+              <div class="ba__layer ba__after">
+            <img class="ba__img" src="images/before-after.jpg" alt="Результат после процедуры — профиль" loading="lazy">
+          </div>
+          <div class="ba__divider"></div>
+          <span class="ba__label ba__label--l">До</span>
+          <span class="ba__label ba__label--r">После</span>
+          <input class="ba__range" id="baRange" type="range" min="0" max="100" value="50" aria-label="Сравнить до и после">
+        </div>
+      </figure>
+
+      <figure class="bellarti-card">
+        <img src="images/preparations.jpg" alt="Линейка препаратов Bellarti: Nucleo 7,5, Amino Plus, Vita" loading="lazy">
+        <figcaption>Работаю только на оригинальных препаратах</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     5. ЗАПИСЬ — главный CTA + форма
+     Логика кнопки «Записаться»: <a>-ссылка на диплинк MAX
+     https://max.ru/:share?text=<закодированный текст>
+     ========================================================== -->
+<section class="booking" id="booking">
+  <div class="container booking__grid">
+    <div class="booking__info reveal">
+      <span class="eyebrow">Онлайн-запись</span>
+      <h2>Запишитесь за 30 секунд</h2>
+      <p>Заполните форму — я соберу заявку в готовое сообщение и открою чат в <b>MAX</b>. Вам останется нажать «Отправить». Без роботов и ботов, всё по-человечески</p>
+
+      <ul class="steps">
+        <li><i>1</i><div><b>Заполните форму</b><span>Имя, телефон, услуга и удобное время.</span></div></li>
+        <li><i>2</i><div><b>Нажмите «Записаться»</b><span>Откроется MAX с готовым текстом заявки.</span></div></li>
+        <li><i>3</i><div><b>Отправьте сообщение</b><span>Выберите чат со мной и нажмите «Отправить».</span></div></li>
+      </ul>
+
+      <div class="booking__promo"><span style="color:#FBE3AE">✦</span> Акция: <b><span data-discount>Скидка 30%</span></b> на любую процедуру — зафиксирую её прямо в сообщении-заявке.</div>
+      <div class="booking__contact">
+        <!-- <<< ТЕЛЕФОН >>> -->
+        <a class="btn btn--white btn--sm" href="tel:+79953413404">☎ +7 995 341-34-04</a>
+      </div>
+    </div>
+
+    <div class="card-form reveal">
+      <h3>Форма записи</h3>
+      <p>Поля со звёздочкой <span style="color:var(--wine)">*</span> обязательны</p>
+
+      <form id="bookingForm" novalidate>
+        <div class="field" id="f-name">
+          <label for="name">Имя <span class="req">*</span></label>
+          <input id="name" name="name" type="text" placeholder="Как к вам обращаться?" autocomplete="name" maxlength="60">
+          <span class="err">Пожалуйста, укажите имя (минимум 2 символа)</span>
+        </div>
+
+        <div class="field" id="f-phone">
+          <label for="phone">Номер телефона <span class="req">*</span></label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+          <span class="err">Введите телефон полностью: +7 и 10 цифр</span>
+        </div>
+
+        <div class="field" id="f-service">
+          <label for="service">Услуга <span class="req">*</span></label>
+          <select id="service" name="service">
+            <option value="" selected disabled>— выберите услугу —</option>
+            <option>Патулинотерапия (плацентарная терапия)</option>
+            <option>Мезотерапия</option>
+            <option>Биоревитализация</option>
+            <option>Коррекция лица с помощью филлеров</option>
+            <option>Коррекция губ</option>
+            <option>Нитевой лифтинг</option>
+            <option>Консультация косметолога</option>
+          </select>
+          <span class="err">Выберите услугу</span>
+        </div>
+
+        <div class="field-row">
+          <div class="field" id="f-date">
+            <label for="date">Удобная дата <span class="req">*</span></label>
+            <input id="date" name="date" type="date">
+            <span class="err">Укажите дату (не раньше сегодняшнего дня)</span>
+          </div>
+          <div class="field">
+            <label for="time">Время</label>
+            <input id="time" name="time" type="time" value="15:00" step="900">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="comment">Комментарий <span style="color:var(--muted);font-weight:500">(по желанию)</span></label>
+          <textarea id="comment" name="comment" maxlength="400" placeholder="Например: хочу естественный объём губ, есть ли аллергии / беременность / хронические заболевания"></textarea>
+        </div>
+
+        <!-- ГЛАВНАЯ КНОПКА-ССЫЛКА: href подставляет JS (диплинк MAX с текстом заявки).
+             Если форма не заполнена — покажет ошибки, никуда не уводя. -->
+        <a href="#" class="btn btn--primary btn--full btn--pulse" id="submitBtn">
+          Записаться → открыть MAX
+        </a>
+        <p class="form__hint">Нажимая кнопку, вы соглашаетесь на обработку персональных данных для связи по вопросу записи.</p>
+
+        <div class="form__alt">
+          <!-- <<< MAX >>> ссылка на профиль (без текста) -->
+          <a class="btn btn--ghost btn--full" style="border-color:rgba(155,44,78,.35)"
+             href="https://max.ru/u/f9LHodD0cOKSmE31Vd8WuA9E1p3PX99Kn2_SOFWnVfKsDGmGxriQ_aRmXCw"
+             target="_blank" rel="noopener">✉ Написать в MAX</a>
+          <!-- <<< ТЕЛЕФОН >>> -->
+          <a class="btn btn--full" style="background:var(--cream);color:var(--ink)" href="tel:+79953413404">☎ Позвонить: +7 995 341-34-04</a>
+        </div>
+
+        <div class="form__ok" id="formOk">✅ Заявка сформирована! Если MAX не открылся — напишите мне напрямую: кнопка «Написать в MAX» выше или по телефону.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+     6. ФУТЕР
+     ========================================================== -->
+<footer class="footer" id="contacts">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <div class="brand">
+          <span class="logo__mark">Е</span>
+          <div style="color:#fff;font-weight:800;font-size:17px">Косметолог Елена</div>
+        </div>
+        <p style="font-size:14px;max-width:300px">Инъекционная косметология и эстетический уход. Кабинет с медицинским оборудованием, оригинальные препараты, аккуратные результаты.</p>
+      </div>
+
+      <div>
+        <h4>Контакты</h4>
+        <ul class="footer__contacts">
+          <!-- <<< ТЕЛЕФОН >>> телефон и MAX привязаны к одному номеру -->
+          <li>Телефон / MAX<b><a href="tel:+79953413404">+7 995 341-34-04</a></b></li>
+          <li>Ежедневно, 09:00–20:00</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Написать</h4>
+        <ul class="footer__links">
+          <!-- <<< MAX >>> ссылка на профиль в MAX (подписная, без текста заявки) -->
+          <li><a href="https://max.ru/u/f9LHodD0cOKSmE31Vd8WuA9E1p3PX99Kn2_SOFWnVfKsDGmGxriQ_aRmXCw" target="_blank" rel="noopener">✉ Профиль в MAX</a></li>
+          <li><a href="https://max.ru/u/f9LHodD0cOKSmE31Vd8WuA9E1p3PX99Kn2_SOFWnVfKsDGmGxriQ_aRmXCw" target="_blank" rel="noopener">✉ Сообщение в MAX</a></li>
+          <li><a href="tel:+79953413404">☎ Звонок</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Услуги</h4>
+        <ul class="footer__links">
+          <li><a href="#services">Патулинотерапия</a></li>
+          <li><a href="#services">Мезотерапия</a></li>
+          <li><a href="#services">Биоревитализация</a></li>
+          <li><a href="#services">Филлеры · Губы · Нити</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© <span id="year">2026</span> Косметолог Елена. Все права защищены.</span>
+    </div>
+  </div>
+  <div class="disclaimer">
+    <div class="container">Имеются противопоказания. Необходима консультация специалиста. Информация на сайте не является публичной офертой.</div>
+  </div>
+</footer>
+
+<!-- плавающая кнопка «наверх» -->
+<button class="totop" id="toTop" aria-label="Наверх">↑</button>
+
+<!-- всплывающее сообщение после нажатия «Записаться» -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <i>✓</i><span id="toastText">Спасибо! Сейчас откроется MAX для отправки заявки</span>
+</div>
+
+<script>
+/* ==========================================================================
+   JS ЛЕНДИНГА: телефон-маска, валидация, диплинк MAX, «до/после»,
+   мобильное меню, анимации появления.
+   ========================================================================== */
+(function(){
+'use strict';
+
+/* --------------------------------------------------------------------------
+   >>>>>>>><<< MAX >>>>>>>>>>><<< ВСТАВЬТЕ СВОИ ДАННЫЕ >>>>>>
+   1) MAX_PROFILE  — ссылка на ваш профиль в MAX (просто «написать мне»).
+   2) MAX_DEEPLINK — «шаринк»-диплинк: к нему дописывается ?text=<заявка>,
+      и в поле ввода открытого чата уже подставлен готовый текст.
+                     Формат: https://max.ru/:share?text=...
+   <<< ТЕЛЕФОН >>> используется в маске ввода и в сообщении.
+   -------------------------------------------------------------------------- */
+  var MAX_PROFILE = 'https://max.ru/u/f9LHodD0cOKSmE31Vd8WuA9E1p3PX99Kn2_SOFWnVfKsDGmGxriQ_aRmXCw';
+
+  var MAX_DEEPLINK_BASE = 'https://max.ru/:share';   /* к нему добавим ?text=... */
+  var PHONE_DISPLAY = '+7 995 341-34-04';
+
+  /* ============================ УТИЛИТЫ ============================ */
+  var $ = function(s, c){ return (c || document).querySelector(s); };
+  var $$ = function(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  function buildDeeplink(text){
+    return MAX_DEEPLINK_BASE + '?text=' + encodeURIComponent(text);
+  }
+  function openMax(url){
+    /* открываем в новой вкладке, чтобы заявка не потерялась */
+    window.open(url, '_blank', 'noopener');
+  }
+
+  /* --------------------------------------------------------------------------
+     >>>>>>>><<< СКИДКА >>>>>>>>>>><<< ПАРАМЕТРЫ АКЦИИ >>>>>>
+     active  — false полностью скроет все бейджи/плашки «Скидка …%» на странице;
+     percent — размер скидки в процентах (обновится везде + в тексте заявки).
+     Важно: цены в карточках это НЕ меняет — просто «вот они».
+     -------------------------------------------------------------------------- */
+  var DISCOUNT = { active: true, percent: 30 };
+
+  $$('[data-discount]').forEach(function(el){
+    var host = el.closest('.promo, .hero__promo, .booking__promo, .disc-chip');
+    if (!DISCOUNT.active) { (host || el).remove(); return; }
+    el.textContent = 'Скидка ' + DISCOUNT.percent + '%';
+  });
+
+  /* ============================ ШАПКА / МЕНЮ ============================ */
+  var header = $('#header');
+  var burger = $('#burger');
+  var mobileMenu = $('#mobileMenu');
+
+  function onScroll(){
+    header.classList.toggle('is-scrolled', window.scrollY > 10);
+    $('#toTop').classList.toggle('is-visible', window.scrollY > 600);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  burger.addEventListener('click', function(){
+    var open = mobileMenu.classList.toggle('is-open');
+    burger.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  $$('#mobileMenu a').forEach(function(a){
+    a.addEventListener('click', function(){
+      mobileMenu.classList.remove('is-open');
+      burger.classList.remove('is-open');
+    });
+  });
+
+  $('#toTop').addEventListener('click', function(){
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+
+  /* год в футере */
+  $('#year').textContent = new Date().getFullYear();
+
+  /* ============================ КНОПКИ-CCЫЛКИ «ЗАПИСАТЬСЯ» (быстрые) ======
+     Кнопки с data-deeplink="quick" (шапка/hero) ведут в MAX с коротким
+     приветственным текстом — без заполнения формы. */
+  var QUICK_TEXT = 'Здравствуйте! Хочу записаться на консультацию к косметологу. Подскажите, пожалуйста, свободные окна.';
+  $$('[data-deeplink="quick"]').forEach(function(link){
+    link.setAttribute('href', buildDeeplink(QUICK_TEXT));
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener');
+  });
+
+  /* ============================ ФОРМА ============================ */
+  var form      = $('#bookingForm');
+  var nameIn    = $('#name');
+  var phoneIn   = $('#phone');
+  var serviceIn = $('#service');
+  var dateIn    = $('#date');
+  var timeIn    = $('#time');
+  var commentIn = $('#comment');
+  var submitBtn = $('#submitBtn');
+  var formOk    = $('#formOk');
+
+  /* минимальная дата = сегодня */
+  (function(){
+    var d = new Date();
+    var iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+    dateIn.min = iso;
+  })();
+
+  /* --- маска телефона: +7 (999) 999-99-99 ------------------------------ */
+  function formatPhone(raw){
+    var digits = raw.replace(/\D/g,'');
+    if (digits[0] === '8') digits = '7' + digits.slice(1);  /* 8 → 7 */
+    if (digits.length === 0) return '';
+    if (digits[0] !== '7') digits = '7' + digits;            /* подставляем код страны */
+    digits = digits.slice(0, 11);
+    var p = digits.slice(1);
+    var out = '+7';
+    if (p.length > 0) out += ' (' + p.slice(0,3);
+    if (p.length >= 3) out += ') ' + p.slice(3,6);
+    if (p.length > 6) out += '-' + p.slice(6,8);   /* разделитель — только когда есть следующая цифра */
+    if (p.length > 8) out += '-' + p.slice(8,10);
+    return out;
+  }
+  phoneIn.addEventListener('input', function(){
+    /* форматируем «на лету»; курсор всегда в конце — маска короткая, это удобно */
+    phoneIn.value = formatPhone(phoneIn.value);
+    validateField('f-phone', phoneOk());
+    refreshDeeplink();
+  });
+  phoneIn.addEventListener('blur', function(){
+    if (phoneIn.value.trim()) phoneIn.value = formatPhone(phoneIn.value);
+    validateField('f-phone', phoneOk());
+  });
+  function phoneOk(){
+    return phoneIn.value.replace(/\D/g,'').length === 11 && phoneIn.value[0] === '+';
+  }
+
+  /* --- валидация ------------------------------------------------------- */
+  /* id обёртки поля = "f-name", "f-phone", "f-service", "f-date" */
+  function validateField(fieldId, ok){
+    var el = document.getElementById(fieldId);
+    if (el) el.classList.toggle('invalid', !ok);
+    return ok;
+  }
+  function nameOk(){ return nameIn.value.trim().length >= 2; }
+  function serviceOk(){ return !!serviceIn.value; }
+  function dateOk(){
+    if (!dateIn.value) return false;
+    var chosen = new Date(dateIn.value + 'T00:00:00');
+    var today = new Date(); today.setHours(0,0,0,0);
+    return chosen >= today;
+  }
+
+  [nameIn, serviceIn, dateIn].forEach(function(el){
+    el.addEventListener('input', function(){ refreshDeeplink(); });
+    el.addEventListener('change', function(){ refreshDeeplink(); });
+  });
+  commentIn.addEventListener('input', refreshDeeplink);
+  timeIn.addEventListener('input', refreshDeeplink);
+
+  /* --- сборка текста заявки -------------------------------------------- */
+  function humanDate(){
+    if (!dateIn.value) return 'уточним при подтверждении';
+    try{
+      var d = new Date(dateIn.value + 'T00:00:00');
+      var months = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+      var s = d.getDate() + ' ' + months[d.getMonth()];
+      return timeIn.value ? s + ', ' + timeIn.value : s;
+    }catch(e){ return dateIn.value; }
+  }
+  function buildMessage(){
+    return 'Здравствуйте! Хочу записаться.' +
+      ' Имя: ' + (nameIn.value.trim() || '—') +
+      '. Телефон: ' + (phoneIn.value.trim() || '—') +
+      '. Услуга: ' + (serviceIn.value || '—') +
+      '. Дата/время: ' + humanDate() +
+      '. Комментарий: ' + (commentIn.value.trim() ? commentIn.value.trim() : 'нет') +
+      (DISCOUNT.active ? '. Прошу зафиксировать скидку ' + DISCOUNT.percent + '%' : '');
+  }
+
+  /* --- держим href кнопки «Записаться» в актуальном состоянии --------- */
+  function refreshDeeplink(){
+    submitBtn.setAttribute('href', buildDeeplink(buildMessage()));
+    submitBtn.setAttribute('target', '_blank');
+    submitBtn.setAttribute('rel', 'noopener');
+  }
+  refreshDeeplink();
+
+  /* --- клик по «Записаться»: сначала валидация, потом переход в MAX ---- */
+  submitBtn.addEventListener('click', function(e){
+    e.preventDefault();
+
+    var ok = true;
+    ok = validateField('f-name', nameOk()) && ok;
+    ok = validateField('f-phone', phoneOk()) && ok;
+    ok = validateField('f-service', serviceOk()) && ok;
+    ok = validateField('f-date', dateOk()) && ok;
+
+    if (!ok){
+      var firstBad = $('.field.invalid');
+      if (firstBad) {
+        firstBad.scrollIntoView({behavior:'smooth', block:'center'});
+        var input = firstBad.querySelector('input,select');
+        if (input) setTimeout(function(){ input.focus({preventScroll:true}); }, 350);
+      }
+      showToast('Проверьте выделенные поля — и кнопка откроет MAX', true);
+      return;
+    }
+
+    /* всё хорошо: обновляем ссылку (на случай правок) и открываем MAX */
+    refreshDeeplink();
+    showToast('Спасибо! Сейчас откроется MAX для отправки заявки');
+    openMax(submitBtn.getAttribute('href'));
+    formOk.classList.add('is-visible');
+
+    /* лёгкая визуальная «отработка» нажатия */
+    submitBtn.style.transform = 'scale(.98)';
+    setTimeout(function(){ submitBtn.style.transform = ''; }, 180);
+  });
+
+  /* не даём Enter отправлять форму «в никуда» — Enter = та же кнопка */
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    submitBtn.click();
+  });
+
+  /* --- тост ------------------------------------------------------------ */
+  var toast = $('#toast'), toastTimer;
+  function showToast(text, warn){
+    $('#toastText').textContent = text;
+    toast.querySelector('i').style.background = warn ? '#E0A106' : '#2FBF62';
+    toast.classList.add('is-visible');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('is-visible'); }, 4200);
+  }
+
+  /* --- кнопки «Записаться» на карточках услуг: скролл + автовывод услуги */
+  $$('[data-pick]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      serviceIn.value = btn.getAttribute('data-pick');
+      validateField('f-service', true);
+      refreshDeeplink();
+      $('#booking').scrollIntoView({behavior:'smooth'});
+      showToast('Услуга «' + btn.getAttribute('data-pick') + '» выбрана — заполните форму');
+    });
+  });
+
+  /* ============================ «ДО/ПОСЛЕ» СЛАЙДЕР ============================ */
+  (function(){
+    var wrap = $('#baSlider'), range = $('#baRange');
+    if(!wrap || !range) return;
+    function set(v){ wrap.style.setProperty('--pos', v + '%'); }
+    range.addEventListener('input', function(){ set(range.value); });
+    set(range.value);
+  })();
+
+
+  /* ============================ АНИМАЦИИ ПОЯВЛЕНИЯ ============================ */
+  (function(){
+    var els = $$('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('is-in'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ en.target.classList.add('is-in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+})();
+</script>
+</body>
+</html>
