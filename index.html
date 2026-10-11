@@ -9,10 +9,10 @@
 <!-- ============================================================
      ЛЕНДИНГ КОСМЕТОЛОГА — один файл: HTML + CSS + JS
      Что и где менять:
-     1) Ссылка на профиль в MAX и диплинк — ищите комментарий «<<< MAX >>>» (2 места: константы в JS и дублирующая кнопка).
+     1) Ссылка на профиль в MAX и диплинк — ищите комментарий «<<< MAX >>>».
      2) Телефон — ищите «<<< ТЕЛЕФОН >>>».
      3) Имя специалиста и тексты — в разметке, всё подписано.
-     4) Фотографии — папка images/ рядом с этим файлом (подробности в README-photos.md).
+     4) Фотографии лежат В КОРНЕ рядом с этим файлом (не в папке images/).
      ============================================================ -->
 
 <style>
@@ -20,18 +20,18 @@
    1. БАЗА / ПЕРЕМЕННЫЕ
    ========================================================== */
 :root{
-  --wine:#9B2C4E;            /* акцентный (кнопки, выделения) */
-  --wine-dark:#7A1F3C;       /* hover */
-  --wine-soft:#F7E6EC;       /* светлая подложка */
-  --gold:#C8A15A;            /* тонкий золотой акцент */
-  --cream:#FAF6F1;           /* фон секций */
+  --wine:#9B2C4E;
+  --wine-dark:#7A1F3C;
+  --wine-soft:#F7E6EC;
+  --gold:#C8A15A;
+  --cream:#FAF6F1;
   --white:#FFFFFF;
-  --ink:#221A1D;             /* основной текст */
-  --muted:#6E6167;           /* вторичный текст */
-  --line:#EADFDB;            /* разделители */
+  --ink:#221A1D;
+  --muted:#6E6167;
+  --line:#EADFDB;
   --shadow:0 10px 30px rgba(60,25,35,.08);
   --shadow-lg:0 24px 60px rgba(60,25,35,.16);
-  --r:20px;                  /* радиус карточек */
+  --r:20px;
   --maxw:1180px;
   --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
 }
@@ -83,7 +83,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
 .btn--white:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.18)}
 .btn--sm{padding:11px 20px;font-size:14px}
 .btn--full{width:100%}
-/* мягкая пульсация главной CTA, чтобы кнопка была заметной */
 @keyframes pulse{0%{box-shadow:0 12px 26px rgba(155,44,78,.35),0 0 0 0 rgba(155,44,78,.45)}70%{box-shadow:0 12px 26px rgba(155,44,78,.35),0 0 0 16px rgba(155,44,78,0)}100%{box-shadow:0 12px 26px rgba(155,44,78,.35),0 0 0 0 rgba(155,44,78,0)}}
 .btn--pulse{animation:pulse 2.6s ease-out infinite}
 @media (prefers-reduced-motion:reduce){.btn--pulse{animation:none}}
@@ -272,8 +271,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   position:relative;border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-lg);
   aspect-ratio:4/3.4;background:#EFE3E6;user-select:none;-webkit-user-select:none;
 }
-/* Составное фото «до/после» (один файл, где «до» сверху, «после» снизу):
-   каждый слой показывает свою половину кадра — картинка не «прыгает». */
 .ba__layer{position:absolute;inset:0;overflow:hidden}
 .ba__layer .ba__img{position:absolute;left:0;width:100%;height:200%;object-fit:cover;object-position:left center;display:block;pointer-events:none}
 .ba__before .ba__img{top:0}
@@ -368,7 +365,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
 }
 .form__ok.is-visible{display:block}
 
-/* тост-уведомление */
 .toast{
   position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);
   z-index:300;background:var(--ink);color:#fff;border-radius:16px;padding:14px 20px;
@@ -409,7 +405,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
 .totop.is-visible{opacity:1;pointer-events:auto;transform:none}
 .totop:hover{background:var(--wine-dark)}
 
-/* появление блоков при прокрутке */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
 .reveal.is-in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
@@ -417,12 +412,8 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
 </head>
 <body>
 
-<!-- ==========================================================
-     ШАПКА
-     ========================================================== -->
 <header class="header" id="header">
   <div class="container header__inner">
-    <!-- <<< ИМЯ >>> замените «Елена» на своё имя/бренд -->
     <a class="logo" href="#hero">
       <span class="logo__mark">Е</span>
       <span>Косметолог Елена<small>инъекционные методики</small></span>
@@ -435,7 +426,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       <a href="#booking">Запись</a>
     </nav>
 
-    <!-- Кнопка в шапке: открывает MAX с приветственным текстом (см. JS: data-deeplink="quick") -->
     <a class="btn btn--primary btn--sm header__cta" href="#" data-deeplink="quick">✦ Записаться</a>
 
     <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
@@ -452,9 +442,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   <a href="tel:+79953413404">☎ +7 995 341-34-04</a>
 </nav>
 
-<!-- ==========================================================
-     1. HERO — приветственная секция
-     ========================================================== -->
 <section class="hero" id="hero">
   <div class="container hero__grid">
     <div class="hero__text reveal">
@@ -462,7 +449,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       <h1 class="hero__title">Красота. Уверенность. <em>ТЫ.</em></h1>
       <p class="hero__sub">Патулинотерапия, биоревитализация, мезотерапия, филлеры, коррекция губ и нитевой лифтинг. Работаю аккуратно, по медицинским протоколам, с препаратами премиум-класса.</p>
 
-      <!-- краткое приветствие от специалиста -->
       <div class="hero__greet">
         <b>Здравствуйте, меня зовут Елена!</b><br>
         Я врач-косметолог с высшим медицинским образованием и 12-летним опытом. Моя задача — не «переделать» вас, а
@@ -471,9 +457,7 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       </div>
 
       <div class="hero__actions">
-        <!-- Главная акцентная кнопка «Записаться» — ссылка на MAX с подставленным текстом (см. JS) -->
         <a href="#" class="btn btn--primary btn--pulse" data-deeplink="quick">Записаться на приём</a>
-        <!-- <<< ТЕЛЕФОН >>> -->
         <a class="hero__phone" href="tel:+79953413404">+7 995 341-34-04</a>
         <span class="hero__promo">✦ <span data-discount>Скидка 30%</span> при онлайн-записи</span>
       </div>
@@ -488,7 +472,7 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     <div class="hero__media reveal">
       <div class="hero__ring" aria-hidden="true"></div>
       <figure class="frame">
-        <img src="images/hero-cosmetologist.jpg"
+        <img src="hero-cosmetologist.jpg"
              alt="Косметолог Елена выполняет аппаратную процедуру клиенту"
              width="1257" height="1680">
       </figure>
@@ -497,14 +481,11 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   </div>
 </section>
 
-<!-- ==========================================================
-     2. О СПЕЦИАЛИСТЕ
-     ========================================================== -->
 <section class="about" id="about">
   <div class="container about__grid">
     <div class="about__media reveal">
       <figure class="frame">
-        <img src="images/about-cosmetologist.jpg"
+        <img src="hero-cosmetologist.jpg"
              alt="Косметолог Елена за процедурой"
              width="1257" height="1680">
       </figure>
@@ -543,12 +524,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   </div>
 </section>
 
-<!-- ==========================================================
-     3. УСЛУГИ
-     Каждая карточка: фото + название + описание + «Записаться».
-     Фото услуг — images/service-*.jpg (см. README-photos.md):
-     замените файлы своими кадрами, имена менять не нужно.
-     ========================================================== -->
 <section class="services" id="services">
   <div class="container">
     <div class="reveal">
@@ -560,11 +535,10 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
 
     <div class="services__grid">
 
-      <!-- 1. ПАТУЛИНОТЕРАПИЯ -->
       <article class="s-card reveal">
         <div class="s-card__media">
           <span class="s-card__tag">Омоложение</span>
-          <img src="images/service-placental.jpg"
+          <img src="service-placental.jpg"
                alt="Патулинотерапия — плацентарная терапия" loading="lazy">
         </div>
         <div class="s-card__body">
@@ -578,11 +552,10 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
         </div>
       </article>
 
-      <!-- 2. МЕЗОТЕРАПИЯ -->
       <article class="s-card reveal">
         <div class="s-card__media">
           <span class="s-card__tag">Питание</span>
-          <img src="images/service-meso.jpg"
+          <img src="service-meso.jpg"
                alt="Мезотерапия — витаминные коктейли" loading="lazy">
         </div>
         <div class="s-card__body">
@@ -596,11 +569,10 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
         </div>
       </article>
 
-      <!-- 3. БИОРЕВИТАЛИЗАЦИЯ -->
       <article class="s-card reveal">
         <div class="s-card__media">
           <span class="s-card__tag">Увлажнение</span>
-          <img src="images/service-biorev.jpg"
+          <img src="service-biorev.jpg"
                alt="Биоревитализация — гиалуроновая кислота" loading="lazy">
         </div>
         <div class="s-card__body">
@@ -614,11 +586,10 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
         </div>
       </article>
 
-      <!-- 4. ФИЛЛЕРЫ -->
       <article class="s-card reveal">
         <div class="s-card__media">
           <span class="s-card__tag">Объёмы</span>
-          <img src="images/service-fillers.jpg"
+          <img src="service-fillers.jpg"
                alt="Коррекция лица филлерами" loading="lazy">
         </div>
         <div class="s-card__body">
@@ -632,11 +603,10 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
         </div>
       </article>
 
-      <!-- 5. КОРРЕКЦИЯ ГУБ -->
       <article class="s-card reveal">
         <div class="s-card__media">
           <span class="s-card__tag">Губы</span>
-          <img src="images/service-lips.jpg"
+          <img src="service-lips.jpg"
                alt="Коррекция губ — результат до и после" loading="lazy">
         </div>
         <div class="s-card__body">
@@ -650,11 +620,10 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
         </div>
       </article>
 
-      <!-- 6. НИТЕВОЙ ЛИФТИНГ -->
       <article class="s-card reveal">
         <div class="s-card__media">
           <span class="s-card__tag">Подтяжка</span>
-          <img src="images/service-threads.jpg"
+          <img src="service-threads.jpg"
                alt="Нитевой лифтинг — подтяжка овала лица" loading="lazy">
         </div>
         <div class="s-card__body">
@@ -674,10 +643,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   </div>
 </section>
 
-<!-- ==========================================================
-     4. РЕЗУЛЬТАТЫ «ДО/ПОСЛЕ» — интерактивный слайдер
-     (использует фото «боковой профиль» из датасета)
-     ========================================================== -->
 <section class="results" id="results">
   <div class="container">
     <div class="reveal">
@@ -690,10 +655,10 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       <figure>
         <div class="ba" id="baSlider" style="--pos:50%">
               <div class="ba__layer ba__before">
-            <img class="ba__img" src="images/before-after.jpg" alt="Результат до процедуры — профиль" loading="lazy">
+            <img class="ba__img" src="before-after.jpg" alt="Результат до процедуры — профиль" loading="lazy">
           </div>
               <div class="ba__layer ba__after">
-            <img class="ba__img" src="images/before-after.jpg" alt="Результат после процедуры — профиль" loading="lazy">
+            <img class="ba__img" src="before-after.jpg" alt="Результат после процедуры — профиль" loading="lazy">
           </div>
           <div class="ba__divider"></div>
           <span class="ba__label ba__label--l">До</span>
@@ -703,18 +668,13 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       </figure>
 
       <figure class="bellarti-card">
-        <img src="images/preparations.jpg" alt="Линейка препаратов Bellarti: Nucleo 7,5, Amino Plus, Vita" loading="lazy">
+        <img src="preparations.jpg" alt="Линейка препаратов Bellarti: Nucleo 7,5, Amino Plus, Vita" loading="lazy">
         <figcaption>Работаю только на оригинальных препаратах</figcaption>
       </figure>
     </div>
   </div>
 </section>
 
-<!-- ==========================================================
-     5. ЗАПИСЬ — главный CTA + форма
-     Логика кнопки «Записаться»: <a>-ссылка на диплинк MAX
-     https://max.ru/:share?text=<закодированный текст>
-     ========================================================== -->
 <section class="booking" id="booking">
   <div class="container booking__grid">
     <div class="booking__info reveal">
@@ -730,7 +690,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
 
       <div class="booking__promo"><span style="color:#FBE3AE">✦</span> Акция: <b><span data-discount>Скидка 30%</span></b> на любую процедуру — зафиксирую её прямо в сообщении-заявке.</div>
       <div class="booking__contact">
-        <!-- <<< ТЕЛЕФОН >>> -->
         <a class="btn btn--white btn--sm" href="tel:+79953413404">☎ +7 995 341-34-04</a>
       </div>
     </div>
@@ -784,19 +743,15 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
           <textarea id="comment" name="comment" maxlength="400" placeholder="Например: хочу естественный объём губ, есть ли аллергии / беременность / хронические заболевания"></textarea>
         </div>
 
-        <!-- ГЛАВНАЯ КНОПКА-ССЫЛКА: href подставляет JS (диплинк MAX с текстом заявки).
-             Если форма не заполнена — покажет ошибки, никуда не уводя. -->
         <a href="#" class="btn btn--primary btn--full btn--pulse" id="submitBtn">
           Записаться → открыть MAX
         </a>
         <p class="form__hint">Нажимая кнопку, вы соглашаетесь на обработку персональных данных для связи по вопросу записи.</p>
 
         <div class="form__alt">
-          <!-- <<< MAX >>> ссылка на профиль (без текста) -->
           <a class="btn btn--ghost btn--full" style="border-color:rgba(155,44,78,.35)"
              href="https://max.ru/u/f9LHodD0cOKSmE31Vd8WuA9E1p3PX99Kn2_SOFWnVfKsDGmGxriQ_aRmXCw"
              target="_blank" rel="noopener">✉ Написать в MAX</a>
-          <!-- <<< ТЕЛЕФОН >>> -->
           <a class="btn btn--full" style="background:var(--cream);color:var(--ink)" href="tel:+79953413404">☎ Позвонить: +7 995 341-34-04</a>
         </div>
 
@@ -806,9 +761,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   </div>
 </section>
 
-<!-- ==========================================================
-     6. ФУТЕР
-     ========================================================== -->
 <footer class="footer" id="contacts">
   <div class="container">
     <div class="footer__grid">
@@ -823,7 +775,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       <div>
         <h4>Контакты</h4>
         <ul class="footer__contacts">
-          <!-- <<< ТЕЛЕФОН >>> телефон и MAX привязаны к одному номеру -->
           <li>Телефон / MAX<b><a href="tel:+79953413404">+7 995 341-34-04</a></b></li>
           <li>Ежедневно, 09:00–20:00</li>
         </ul>
@@ -832,7 +783,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       <div>
         <h4>Написать</h4>
         <ul class="footer__links">
-          <!-- <<< MAX >>> ссылка на профиль в MAX (подписная, без текста заявки) -->
           <li><a href="https://max.ru/u/f9LHodD0cOKSmE31Vd8WuA9E1p3PX99Kn2_SOFWnVfKsDGmGxriQ_aRmXCw" target="_blank" rel="noopener">✉ Профиль в MAX</a></li>
           <li><a href="https://max.ru/u/f9LHodD0cOKSmE31Vd8WuA9E1p3PX99Kn2_SOFWnVfKsDGmGxriQ_aRmXCw" target="_blank" rel="noopener">✉ Сообщение в MAX</a></li>
           <li><a href="tel:+79953413404">☎ Звонок</a></li>
@@ -859,36 +809,21 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   </div>
 </footer>
 
-<!-- плавающая кнопка «наверх» -->
 <button class="totop" id="toTop" aria-label="Наверх">↑</button>
 
-<!-- всплывающее сообщение после нажатия «Записаться» -->
 <div class="toast" id="toast" role="status" aria-live="polite">
   <i>✓</i><span id="toastText">Спасибо! Сейчас откроется MAX для отправки заявки</span>
 </div>
 
 <script>
-/* ==========================================================================
-   JS ЛЕНДИНГА: телефон-маска, валидация, диплинк MAX, «до/после»,
-   мобильное меню, анимации появления.
-   ========================================================================== */
 (function(){
 'use strict';
 
-/* --------------------------------------------------------------------------
-   >>>>>>>><<< MAX >>>>>>>>>>><<< ВСТАВЬТЕ СВОИ ДАННЫЕ >>>>>>
-   1) MAX_PROFILE  — ссылка на ваш профиль в MAX (просто «написать мне»).
-   2) MAX_DEEPLINK — «шаринк»-диплинк: к нему дописывается ?text=<заявка>,
-      и в поле ввода открытого чата уже подставлен готовый текст.
-                     Формат: https://max.ru/:share?text=...
-   <<< ТЕЛЕФОН >>> используется в маске ввода и в сообщении.
-   -------------------------------------------------------------------------- */
   var MAX_PROFILE = 'https://max.ru/u/f9LHodD0cOKSmE31Vd8WuA9E1p3PX99Kn2_SOFWnVfKsDGmGxriQ_aRmXCw';
 
-  var MAX_DEEPLINK_BASE = 'https://max.ru/:share';   /* к нему добавим ?text=... */
+  var MAX_DEEPLINK_BASE = 'https://max.ru/:share';
   var PHONE_DISPLAY = '+7 995 341-34-04';
 
-  /* ============================ УТИЛИТЫ ============================ */
   var $ = function(s, c){ return (c || document).querySelector(s); };
   var $$ = function(s, c){ return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
@@ -896,16 +831,9 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     return MAX_DEEPLINK_BASE + '?text=' + encodeURIComponent(text);
   }
   function openMax(url){
-    /* открываем в новой вкладке, чтобы заявка не потерялась */
     window.open(url, '_blank', 'noopener');
   }
 
-  /* --------------------------------------------------------------------------
-     >>>>>>>><<< СКИДКА >>>>>>>>>>><<< ПАРАМЕТРЫ АКЦИИ >>>>>>
-     active  — false полностью скроет все бейджи/плашки «Скидка …%» на странице;
-     percent — размер скидки в процентах (обновится везде + в тексте заявки).
-     Важно: цены в карточках это НЕ меняет — просто «вот они».
-     -------------------------------------------------------------------------- */
   var DISCOUNT = { active: true, percent: 30 };
 
   $$('[data-discount]').forEach(function(el){
@@ -914,7 +842,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     el.textContent = 'Скидка ' + DISCOUNT.percent + '%';
   });
 
-  /* ============================ ШАПКА / МЕНЮ ============================ */
   var header = $('#header');
   var burger = $('#burger');
   var mobileMenu = $('#mobileMenu');
@@ -942,12 +869,8 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     window.scrollTo({top:0, behavior:'smooth'});
   });
 
-  /* год в футере */
   $('#year').textContent = new Date().getFullYear();
 
-  /* ============================ КНОПКИ-CCЫЛКИ «ЗАПИСАТЬСЯ» (быстрые) ======
-     Кнопки с data-deeplink="quick" (шапка/hero) ведут в MAX с коротким
-     приветственным текстом — без заполнения формы. */
   var QUICK_TEXT = 'Здравствуйте! Хочу записаться на консультацию к косметологу. Подскажите, пожалуйста, свободные окна.';
   $$('[data-deeplink="quick"]').forEach(function(link){
     link.setAttribute('href', buildDeeplink(QUICK_TEXT));
@@ -955,7 +878,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     link.setAttribute('rel', 'noopener');
   });
 
-  /* ============================ ФОРМА ============================ */
   var form      = $('#bookingForm');
   var nameIn    = $('#name');
   var phoneIn   = $('#phone');
@@ -966,30 +888,28 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   var submitBtn = $('#submitBtn');
   var formOk    = $('#formOk');
 
-  /* минимальная дата = сегодня */
   (function(){
     var d = new Date();
     var iso = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
     dateIn.min = iso;
   })();
 
-  /* --- маска телефона: +7 (999) 999-99-99 ------------------------------ */
+  /* --- маска телефона: +7 (999) 999-99-99 --- */
   function formatPhone(raw){
     var digits = raw.replace(/\D/g,'');
-    if (digits[0] === '8') digits = '7' + digits.slice(1);  /* 8 → 7 */
+    if (digits[0] === '8') digits = '7' + digits.slice(1);
     if (digits.length === 0) return '';
-    if (digits[0] !== '7') digits = '7' + digits;            /* подставляем код страны */
+    if (digits[0] !== '7') digits = '7' + digits;
     digits = digits.slice(0, 11);
     var p = digits.slice(1);
     var out = '+7';
     if (p.length > 0) out += ' (' + p.slice(0,3);
     if (p.length >= 3) out += ') ' + p.slice(3,6);
-    if (p.length > 6) out += '-' + p.slice(6,8);   /* разделитель — только когда есть следующая цифра */
+    if (p.length > 6) out += '-' + p.slice(6,8);
     if (p.length > 8) out += '-' + p.slice(8,10);
     return out;
   }
   phoneIn.addEventListener('input', function(){
-    /* форматируем «на лету»; курсор всегда в конце — маска короткая, это удобно */
     phoneIn.value = formatPhone(phoneIn.value);
     validateField('f-phone', phoneOk());
     refreshDeeplink();
@@ -1002,8 +922,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     return phoneIn.value.replace(/\D/g,'').length === 11 && phoneIn.value[0] === '+';
   }
 
-  /* --- валидация ------------------------------------------------------- */
-  /* id обёртки поля = "f-name", "f-phone", "f-service", "f-date" */
   function validateField(fieldId, ok){
     var el = document.getElementById(fieldId);
     if (el) el.classList.toggle('invalid', !ok);
@@ -1025,7 +943,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   commentIn.addEventListener('input', refreshDeeplink);
   timeIn.addEventListener('input', refreshDeeplink);
 
-  /* --- сборка текста заявки -------------------------------------------- */
   function humanDate(){
     if (!dateIn.value) return 'уточним при подтверждении';
     try{
@@ -1045,7 +962,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       (DISCOUNT.active ? '. Прошу зафиксировать скидку ' + DISCOUNT.percent + '%' : '');
   }
 
-  /* --- держим href кнопки «Записаться» в актуальном состоянии --------- */
   function refreshDeeplink(){
     submitBtn.setAttribute('href', buildDeeplink(buildMessage()));
     submitBtn.setAttribute('target', '_blank');
@@ -1053,7 +969,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
   }
   refreshDeeplink();
 
-  /* --- клик по «Записаться»: сначала валидация, потом переход в MAX ---- */
   submitBtn.addEventListener('click', function(e){
     e.preventDefault();
 
@@ -1074,24 +989,20 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
       return;
     }
 
-    /* всё хорошо: обновляем ссылку (на случай правок) и открываем MAX */
     refreshDeeplink();
     showToast('Спасибо! Сейчас откроется MAX для отправки заявки');
     openMax(submitBtn.getAttribute('href'));
     formOk.classList.add('is-visible');
 
-    /* лёгкая визуальная «отработка» нажатия */
     submitBtn.style.transform = 'scale(.98)';
     setTimeout(function(){ submitBtn.style.transform = ''; }, 180);
   });
 
-  /* не даём Enter отправлять форму «в никуда» — Enter = та же кнопка */
   form.addEventListener('submit', function(e){
     e.preventDefault();
     submitBtn.click();
   });
 
-  /* --- тост ------------------------------------------------------------ */
   var toast = $('#toast'), toastTimer;
   function showToast(text, warn){
     $('#toastText').textContent = text;
@@ -1101,7 +1012,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     toastTimer = setTimeout(function(){ toast.classList.remove('is-visible'); }, 4200);
   }
 
-  /* --- кнопки «Записаться» на карточках услуг: скролл + автовывод услуги */
   $$('[data-pick]').forEach(function(btn){
     btn.addEventListener('click', function(){
       serviceIn.value = btn.getAttribute('data-pick');
@@ -1112,7 +1022,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     });
   });
 
-  /* ============================ «ДО/ПОСЛЕ» СЛАЙДЕР ============================ */
   (function(){
     var wrap = $('#baSlider'), range = $('#baRange');
     if(!wrap || !range) return;
@@ -1121,8 +1030,6 @@ h2{font-size:clamp(28px,5vw,42px);margin-bottom:14px}
     set(range.value);
   })();
 
-
-  /* ============================ АНИМАЦИИ ПОЯВЛЕНИЯ ============================ */
   (function(){
     var els = $$('.reveal');
     if(!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('is-in'); }); return; }
